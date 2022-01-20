@@ -1,22 +1,25 @@
-import React from "react"
-import {RepositoryItem } from "./RepositoryItem"
-import {Counter} from "./Counter"
-
-const RepositoryListProps = {
-  name : "nome",
-  description : "descrição",
-  link : "",
-}
+import React, { useState } from "react"
+import '../styles/repositories.scss'
+import { RepositoryItem } from "./RepositoryItem"
 
 export const  RepositoryList = () => {
+  const [repositories, setRepositories] = useState([])
+
+   React.useEffect(() => {
+    fetch('https://api.github.com/users/swannyalves/repos')
+    .then(response => response.json())
+    .then(data => setRepositories(data))
+  } , [])
+
   return(
-    <section>
+    <section className="repository-list">
       <h2>Repository List</h2>
       <ul>
-        <RepositoryItem repository={RepositoryListProps}/>
-        <RepositoryItem repository={RepositoryListProps}/>
-        <RepositoryItem />
-        <Counter/>
+        {
+          repositories.map(repository => (
+            <RepositoryItem key={repository.id} repository={repository} />
+          ))
+        }
       </ul>
     </section>
   )

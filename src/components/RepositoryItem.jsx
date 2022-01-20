@@ -3,7 +3,7 @@ export const RepositoryItem = ({repository}) => {
     <li>
       <p>{repository?.name ?? 'default'}</p>
       <p>{repository?.description ?? 'default'}</p>
-      <a href=''>
+      <a href={repository?.html_url}>
         acessar
       </a>
     </li>
